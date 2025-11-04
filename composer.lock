@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "881cca5655426af07e8f12dffa24a4d5",
+    "content-hash": "6d4672bd35fc94e46c168d25293594cd",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -3519,6 +3519,54 @@
                 }
             ],
             "time": "2025-03-24T10:02:05+00:00"
+        },
+        {
+            "name": "mwgg/airports",
+            "version": "v2025.10.27",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mwgg/Airports.git",
+                "reference": "7fe7188c7c946cff4bf0ee63c8a5f87bfc90f5a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mwgg/Airports/zipball/7fe7188c7c946cff4bf0ee63c8a5f87bfc90f5a1",
+                "reference": "7fe7188c7c946cff4bf0ee63c8a5f87bfc90f5a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mwgg",
+                    "homepage": "https://github.com/mwgg"
+                }
+            ],
+            "description": "A JSON collection of ~29k entries with basic information about nearly every airport and landing strip in the world",
+            "homepage": "https://github.com/mwgg/Airports",
+            "keywords": [
+                "ICAO",
+                "airport-data",
+                "airports",
+                "aviation",
+                "aviation-data",
+                "coordinates",
+                "geolocation",
+                "iata",
+                "json",
+                "timezone"
+            ],
+            "support": {
+                "issues": "https://github.com/mwgg/Airports/issues",
+                "source": "https://github.com/mwgg/Airports"
+            },
+            "time": "2025-10-27T17:09:38+00:00"
         },
         {
             "name": "nesbot/carbon",
