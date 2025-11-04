@@ -59,6 +59,7 @@ final class PublicTicketForm extends Component implements HasForms
                             Forms\Components\Select::make('from')
                                 ->label('Откуда')
                                 ->options($this->loadAirports())
+                                ->default('SVO')
                                 ->searchable()
                                 ->placeholder('Москва (SVO)')
                                 ->required()
@@ -67,6 +68,7 @@ final class PublicTicketForm extends Component implements HasForms
                             Forms\Components\Select::make('to')
                                 ->label('Куда')
                                 ->options($this->loadAirports())
+                                ->default('IST')
                                 ->searchable()
                                 ->placeholder('Стамбул (IST)')
                                 ->required()
@@ -77,13 +79,15 @@ final class PublicTicketForm extends Component implements HasForms
                         ->schema([
                             Forms\Components\DatePicker::make('date_from')
                                 ->label('Дата вылета')
+                                ->default(now()->format('d.m.Y'))
                                 ->required(),
 
                             Forms\Components\DatePicker::make('date_to')
                                 ->label('Дата обратно')
+                                ->default(now()->addDay()->format('d.m.Y'))
                                 ->hidden(fn ($get) => $get('trip_type') === 'one_way'),
 
-                            Forms\Components\TextInput::make('passengers')
+                            Forms\Components\TextInput::make('passenger_count')
                                 ->label('Пассажиров')
                                 ->numeric()
                                 ->default(1)
@@ -107,7 +111,7 @@ final class PublicTicketForm extends Component implements HasForms
         $state = $this->form->getState();
         session(['ticket_form' => $state]);
 
-        return redirect('/ticket/passengers');
+        return to_route('ticket.passengers');
     }
 
     public function render(): View

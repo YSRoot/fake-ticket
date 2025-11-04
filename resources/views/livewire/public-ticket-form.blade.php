@@ -1,16 +1,19 @@
-<form wire:submit.prevent="submit" class="space-y-6">
+<div>
+    @include('components.partials.hero')
 
-    <div class="grid grid-cols-1 gap-6">
-        {{ $this->form }}
+    <div class="max-w-4xl mx-auto px-4 pb-24">
+
+        <div class="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+            <form wire:submit.prevent="submit" class="space-y-6">
+                {{ $this->form }}
+
+                <button type="submit"
+                        class="w-full py-4 rounded-xl font-semibold text-lg text-white
+                       bg-gradient-to-r from-indigo-600 to-purple-600
+                       hover:from-indigo-700 hover:to-purple-700 transition shadow-lg">
+                    Найти билеты
+                </button>
+            </form>
+        </div>
     </div>
-
-    <button
-        type="submit"
-        class="w-full py-4 text-lg rounded-xl font-bold text-white
-               bg-gradient-to-r from-indigo-600 to-blue-500
-               hover:from-indigo-700 hover:to-blue-600
-               shadow-lg hover:shadow-xl transition-all"
-    >
-        Найти билеты
-    </button>
-</form>
+</div>
