@@ -63,7 +63,7 @@ final class PublicTicketForm extends Component implements HasForms
                                 ->searchable()
                                 ->placeholder('Москва (SVO)')
                                 ->required()
-                                ->prefixIcon('heroicon-o-paper-airplane'),
+                                ->prefixIcon('gmdi-flight-takeoff-r'),
 
                             Forms\Components\Select::make('to')
                                 ->label('Куда')
@@ -72,7 +72,7 @@ final class PublicTicketForm extends Component implements HasForms
                                 ->searchable()
                                 ->placeholder('Стамбул (IST)')
                                 ->required()
-                                ->prefixIcon('heroicon-o-paper-airplane'),
+                                ->prefixIcon('gmdi-flight-land-r'),
                         ]),
 
                     Grid::make(3)
@@ -92,7 +92,7 @@ final class PublicTicketForm extends Component implements HasForms
                                 ->numeric()
                                 ->default(1)
                                 ->minValue(1)
-                                ->maxValue(6)
+                                ->maxValue(20)
                                 ->required(),
                         ]),
                 ])
