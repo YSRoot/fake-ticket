@@ -1,5 +1,4 @@
 {
-    "$schema": "https://getcomposer.org/schema.json",
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
@@ -9,6 +8,7 @@
         "php": "^8.2",
         "filament/filament": "^4.0",
         "laravel/framework": "^12.0",
+        "laravel/octane": "^2.13",
         "laravel/sail": "^1.47",
         "laravel/tinker": "^2.10.1",
         "mwgg/airports": "^2025.10"
