@@ -20,9 +20,9 @@ RUN install-php-extensions \
     pcntl \
     opcache \
     pdo \
+    intl \
     pdo_pgsql
 #    redis \
-#    intl \
 #    gmp \
 #    mbstring
 
