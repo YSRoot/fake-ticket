@@ -13,6 +13,22 @@ RUN apk update && apk add --no-cache \
     unzip \
     oniguruma-dev
 
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium-browser"
+
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    freetype-dev \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs \
+    npm
+
+# Install puppeteer
+RUN npm install -g puppeteer
+
 RUN install-php-extensions \
     exif \
     gd \

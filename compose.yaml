@@ -8,6 +8,8 @@ services:
         restart: unless-stopped
         extra_hosts:
             - 'host.docker.internal:host-gateway'
+        environment:
+            - PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium-browser"
         volumes:
             - .:/var/www
             - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -17,6 +19,7 @@ services:
             - ft-network
         depends_on:
             - pgsql
+
     node:
         image: node:20-alpine
         working_dir: /app
@@ -27,6 +30,7 @@ services:
             - "5173:5173"
         environment:
             CHOKIDAR_USEPOLLING: true
+
     pgsql:
         image: 'postgres:18-alpine'
         ports:

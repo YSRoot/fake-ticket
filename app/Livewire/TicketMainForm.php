@@ -15,7 +15,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 
 #[Layout('components.layouts.app')]
-final class PublicTicketForm extends Component implements HasForms
+final class TicketMainForm extends Component implements HasForms
 {
     use InteractsWithForms;
 

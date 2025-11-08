@@ -13,7 +13,6 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Size;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\View\View;
@@ -34,7 +33,7 @@ final class TicketPassengersForm extends Component implements HasForms, HasActio
 
     public array $data = [];
 
-    public function mount(): ?RedirectResponse
+    public function mount(): RedirectResponse|Redirector|null
     {
         if (!session()->has('ticket_form')) {
             return to_route('ticket.form');
