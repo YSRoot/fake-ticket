@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Airports;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\File;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Filament\Forms;
@@ -58,7 +58,7 @@ final class TicketMainForm extends Component implements HasForms
                         ->schema([
                             Forms\Components\Select::make('from')
                                 ->label('Откуда')
-                                ->options($this->loadAirports())
+                                ->options(Airports::options())
                                 ->default('SVO')
                                 ->searchable()
                                 ->placeholder('Москва (SVO)')
@@ -67,7 +67,7 @@ final class TicketMainForm extends Component implements HasForms
 
                             Forms\Components\Select::make('to')
                                 ->label('Куда')
-                                ->options($this->loadAirports())
+                                ->options(Airports::options())
                                 ->default('IST')
                                 ->searchable()
                                 ->placeholder('Стамбул (IST)')
@@ -117,25 +117,5 @@ final class TicketMainForm extends Component implements HasForms
     public function render(): View
     {
         return view('livewire.public-ticket-form');
-    }
-
-    private function loadAirports(): array
-    {
-        $path = base_path('vendor/mwgg/airports/airports.json');
-        $json = File::get($path);
-        $data = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-
-        return collect($data)
-            ->filter(fn ($item) => !empty($item['iata'])) // только аэропорты с IATA
-            ->mapWithKeys(function ($item) {
-
-                $code = $item['iata']; // IATA code (то, что нам нужно)
-                $city = $item['city'] ?: $item['name']; // если city отсутствует — название аэропорта
-                $country = $item['country'];
-
-                $label = "{$city} ({$code})";
-
-                return [$code => $label];
-            })->toArray();
     }
 }

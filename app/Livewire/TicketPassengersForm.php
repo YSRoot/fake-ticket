@@ -115,6 +115,7 @@ final class TicketPassengersForm extends Component implements HasForms, HasActio
                                         TextInput::make('email')
                                             ->label('E-mail')
                                             ->required()
+                                            ->default(fake()->email())
                                             ->email(),
                                     ]),
                             ])
@@ -155,7 +156,13 @@ final class TicketPassengersForm extends Component implements HasForms, HasActio
                                         EmptyState::make('Форма оплаты')
                                             ->description('Здесь будет форма оплаты выбранным платежным методом.')
                                             ->icon(Heroicon::DocumentCurrencyEuro),
-                                    ]),
+                                    ])
+                                    ->action(function () {
+                                        $passengerForm = $this->form->getRawState();
+                                        session(['passenger_form' => $passengerForm]);
+
+                                        return to_route('ticket.preview');
+                                    }),
                             ])
                             ->columnSpan(1),
                     ]),

@@ -1,4 +1,23 @@
-<!DOCTYPE html>
+@props([
+    'ticket_form' => [],
+    'passenger_form' => [],
+])
+@php
+    use App\Airports;
+    use Carbon\Carbon;use Carbon\CarbonInterval;
+
+    $fake    = fake();
+    $from    = Airports::byIata($ticket_form['from']);
+    $to      = Airports::byIata($ticket_form['to']);
+    $flyTime = CarbonInterval::hours($fake->numberBetween(1, 24))
+        ->minutes($fake->numberBetween(0, 59))
+        ->cascade()
+        ->forHumans();
+    $passenger = Arr::first($passenger_form['passengers']);
+    $price = Number::currency($fake->randomFloat(2, 300, 2000), 'USD');
+
+    @endphp
+    <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -23,9 +42,9 @@
                 </div>
                 <div>
                     <span style="font-weight:bold;">Бронирование:</span>
-                    114023&nbsp;|&nbsp;vasyapupkin@gmail.com&nbsp;|
+                    114023&nbsp;|&nbsp;{!! $passenger_form['email'] !!}&nbsp;|
                     <span style="font-weight:bold;">Дата бронирования:</span>
-                    02.11.2025 20:25
+                    {!! now()->format('d.m.Y H:i') !!}
                 </div>
             </td>
         </tr>
@@ -52,10 +71,10 @@
                 <td style="padding:4px 0;">Turkish Airlines</td>
             </tr>
             <tr>
-                <td style="padding:2px 0;">Рейс 16</td>
+                <td style="padding:2px 0;">Рейс {!! rand(10, 100) !!}</td>
             </tr>
             <tr>
-                <td style="padding:2px 0;">Самолет: Airbus A350-941</td>
+                <td style="padding:2px 0;">{!! sprintf('Самолет: Airbus A%d-%d', rand(100, 999), rand(100, 900)) !!}</td>
             </tr>
             <tr>
                 <td style="padding:2px 0;">Эконом</td>
@@ -67,16 +86,16 @@
             <tr>
                 <!-- Левая колонка: вылет -->
                 <td style="width:50%; vertical-align:top; padding-right:10px; border-right:1px solid #ddd;">
-                    <div style="margin-bottom:4px;">30.11.2025</div>
-                    <div style="margin-bottom:4px;">Гуарульос (GRU)</div>
-                    <div style="margin-top:8px;">GRU - 04:10</div>
+                    <div style="margin-bottom:4px;">{!! Carbon::make($ticket_form['date_from'])->format('d.m.Y') !!}</div>
+                    <div style="margin-bottom:4px;">{!! sprintf('%s (%s)', $from['city'], $from['iata']) !!}</div>
+                    <div style="margin-top:8px;">{!! sprintf('%s - %s', $from['iata'], $fake->time('H:i')) !!}</div>
                 </td>
 
                 <!-- Правая колонка: прилёт -->
                 <td style="width:50%; vertical-align:top; padding-left:10px;">
-                    <div style="margin-bottom:4px;">30.11.2025</div>
-                    <div style="margin-bottom:4px;">Стамбул (IST)</div>
-                    <div style="margin-top:8px;">IST - 22:35</div>
+                    <div style="margin-bottom:4px;">{!! Carbon::make($ticket_form['date_to'])->format('d.m.Y') !!}</div>
+                    <div style="margin-bottom:4px;">{!! sprintf('%s (%s)', $to['city'], $to['iata']) !!}</div>
+                    <div style="margin-top:8px;">{!! sprintf('%s - %s', $to['iata'], $fake->time('H:i')) !!}</div>
                 </td>
             </tr>
         </table>
@@ -86,11 +105,11 @@
             <tr>
                 <td style="width:50%; vertical-align:top; padding-right:10px;">
                     <div style="font-weight:bold; margin-bottom:2px;">Время в пути:</div>
-                    <div>12ч 25мин</div>
+                    <div>{!! $flyTime !!}</div>
                 </td>
                 <td style="width:50%; vertical-align:top; padding-left:10px;">
                     <div style="font-weight:bold; margin-bottom:2px;">Номер бронирования:</div>
-                    <div>MF1VEJ</div>
+                    <div>{!! $fake->regexify('[A-Z]{5}[0-9]{3}') !!}</div>
                 </td>
             </tr>
         </table>
@@ -111,19 +130,19 @@
         <table style="width:100%; border-collapse:collapse; font-size:13px;">
             <tr>
                 <td style="width:35%; padding:4px 8px; background:#f5f5f5; font-weight:bold;">Номер билета</td>
-                <td style="width:65%; padding:4px 8px;">5130888127548</td>
+                <td style="width:65%; padding:4px 8px;">{!! $fake->numerify('#############') !!}</td>
             </tr>
             <tr>
                 <td style="padding:4px 8px; background:#f5f5f5; font-weight:bold;">Имя</td>
-                <td style="padding:4px 8px;">Vasya</td>
+                <td style="padding:4px 8px;">{!! $passenger['first_name'] !!}</td>
             </tr>
             <tr>
                 <td style="padding:4px 8px; background:#f5f5f5; font-weight:bold;">Фамилия</td>
-                <td style="padding:4px 8px;">Pupkin</td>
+                <td style="padding:4px 8px;">{!! $passenger['last_name'] !!}</td>
             </tr>
             <tr>
                 <td style="padding:4px 8px; background:#f5f5f5; font-weight:bold;">Документ</td>
-                <td style="padding:4px 8px;">3ASALT8TT20</td>
+                <td style="padding:4px 8px;">{!! $passenger['document'] !!}</td>
             </tr>
         </table>
 
@@ -147,7 +166,7 @@
                 <td style="width:65%; padding:4px 8px;">
                     Банковская карта<br>
                     MasterCard<br>
-                    ************6509
+                    {!! sprintf('************%d', $fake->numerify('####')) !!}
                 </td>
             </tr>
         </table>
@@ -157,7 +176,7 @@
         <table style="width:100%; border-collapse:collapse; font-size:13px;">
             <tr>
                 <td style="padding:3px 8px;">1 взрослый билет</td>
-                <td style="padding:3px 8px; text-align:right;">1 155,11 $</td>
+                <td style="padding:3px 8px; text-align:right;">{!! $price !!}</td>
             </tr>
             <tr>
                 <td style="padding:3px 8px;">Скидка</td>
@@ -165,8 +184,8 @@
             </tr>
             <tr>
                 <td style="padding:6px 8px; font-weight:bold; border-top: 1px solid #ddd;">Итого к оплате:</td>
-                <td style="padding:6px 8px; font-weight:bold; text-align:right; border-top: 1px solid #ddd;">1 155,11
-                    $
+                <td style="padding:6px 8px; font-weight:bold; text-align:right; border-top: 1px solid #ddd;">
+                    {!! $price !!}
                 </td>
             </tr>
         </table>
